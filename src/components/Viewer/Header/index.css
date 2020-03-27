@@ -1,0 +1,23 @@
+.Wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.LeftColumn {
+  width: 100px;
+}
+
+.Item {
+  color: white;
+  font-size: 14px;
+  width: 22px;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.Small {
+  font-size: 12px;
+  width: 10px;
+  margin: auto;
+}
