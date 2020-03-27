@@ -50,6 +50,7 @@ class Cell extends Component {
         needUpdate = selected[selected.length - 1].y === position.y
       }
     }
+
     return needUpdate || isSelect
   }
 
@@ -82,7 +83,8 @@ class Cell extends Component {
   onMouseDown = event => {
     event.stopPropagation()
     if (this.props.type === COUNTER) return
-    const { setSelected, mouseDown, position } = this.props
+    const { setSelected, mouseDown, position, click } = this.props
+    click(position)
     setSelected(position)
     mouseDown(true)
     this.setState({ isSelect: !this.state.isSelect })
@@ -93,12 +95,14 @@ class Cell extends Component {
     if (this.props.type === COUNTER) return
     const {
       position,
-      store: { mouseLeave }
+      store: { mouseLeave },
+      mouseUp,
+      setSelected
     } = this.props
 
-    this.props.mouseUp(true)
+    mouseUp(true)
     if (mouseLeave) {
-      this.props.setSelected(position)
+      setSelected(position)
     }
   }
 
@@ -110,19 +114,27 @@ class Cell extends Component {
   }
 
   render() {
-    const { type } = this.props
-    const { isSelect, text } = this.state
+    const {
+      type,
+      store: { selected },
+      position
+    } = this.props
+    const { text } = this.state
+
+    const added = selected.some(
+      ({ x, y }) => x === position.x && y === position.y
+    )
 
     const className = cn({ Cell }, `Cell-${type}`, {
-      "Cell-select": isSelect
+      "Cell-select": added
     })
 
     return (
       <div
         className={className}
         onClick={this.onClick}
-        onMouseLeave={this.onMouseLeave}
         onMouseDown={this.onMouseDown}
+        onMouseLeave={this.onMouseLeave}
         onMouseUp={this.onMouseUp}
       >
         {text}

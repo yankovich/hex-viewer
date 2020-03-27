@@ -9,7 +9,7 @@ import {
 
 const INITIAL_STATE = {
   selected: [],
-  rowCounter: 1, //for example
+  rowCounter: 16, //for example
   mouseDown: false,
   mouseLeave: false,
   mouseUp: false
@@ -79,7 +79,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case CLICK: {
       return {
         ...state,
-        selected: [],
+        selected: [payload],
         mouseDown: false,
         mouseLeave: false,
         mouseUp: false
